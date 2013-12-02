@@ -1,0 +1,66 @@
+body {
+    background-color: #333333;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.box {
+    background-color: #f0f0f0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font: 12px monospace;
+    border: 1px solid black;
+    display: inline-block;
+}
+.arrowhandle {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 5px;
+    height: 5px;
+    background-color: green;
+}
+.arrowhandle:hover {
+    width: 20px;
+    height: 20px;
+}
+.field {
+    border-bottom: 1px solid black;
+    height: 17px;
+    text-align: left;
+}
+.fieldText {
+    display: inline-block;
+    margin-right: 10px;
+    height: 100%;
+    float: left;
+}
+.fieldAnchor {
+    margin:0px auto;
+    background-color: yellow;
+    width: 17px;
+    height: 100%;
+    position: relative;
+    display: inline-block;
+    float: right;
+}
+.fieldAnchor:hover {
+    background-color: greenyellow;
+}
+.header {
+    padding: 10px;
+    max-width: 200px;
+    border-bottom: 3px solid black;
+    text-align: center;
+}
+.arrow {
+    position:absolute;
+    pointer-events: none;
+    border-color: greenyellow;
+    border-width: 4px;
+    border-style: dotted;
+}
