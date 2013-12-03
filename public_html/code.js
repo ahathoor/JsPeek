@@ -9,6 +9,8 @@ dragSystem.makeDraggable = function(draggable, bounds) {
         draggable.dragDescriptor.checkY = bounds.checkY;
     }
     draggable.dragDescriptor.dragBabies = [];
+        draggable.dragDescriptor.offX = 0;
+        draggable.dragDescriptor.offY = 0;
 
     draggable.mousedown(function(e) {
         dragSystem.dragged = draggable;

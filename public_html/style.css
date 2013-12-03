@@ -111,15 +111,19 @@ body {
 }
 
 input[type=button] {
-    background-color: greenyellow;
+    background-color: aliceblue;
     margin: 3px;
-    border: 0px;
+    border: 1px solid black;
     border-radius: 4px;
+}
+#hideshow {
+    background-color: greenyellow;
+}
+#hideshow:hover {
+    background-color: coral;
 }
 input[type=button]:hover {
     background-color: coral;
-    border: 0px;
-    border-radius: 4px;
 }
 
 #codeToRun {
