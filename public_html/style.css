@@ -91,3 +91,42 @@ body {
 .closebutton:hover {
     background-color: red;
 }
+
+
+#controlPanel {
+    border: 2px solid #fafafa;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    display: inline-block;
+    position:absolute;
+    left: 10px;
+    top:10px;
+    z-index: 10;
+    font-family: monospace
+}
+
+#controlPanelTop {
+    height: 25px;
+    min-width: 300px;
+}
+
+input[type=button] {
+    background-color: greenyellow;
+    margin: 3px;
+    border: 0px;
+    border-radius: 4px;
+}
+input[type=button]:hover {
+    background-color: coral;
+    border: 0px;
+    border-radius: 4px;
+}
+
+#codeToRun {
+    display: block;
+    color: #333333;
+    background-color: #f0f0f0;
+}
+
+#hideshow {
+}

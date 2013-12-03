@@ -9,5 +9,40 @@
         <script src="code.js"></script>
     </head>
     <body>
+        <div id="controlPanel">
+            <div id="controlPanelTop">
+                <input type="button" id="hideshow" onclick="hideshow()" value="⇱">
+                Control Panel
+            </div>
+            <div id="controlPanelMain">
+                <textarea id="codeToRun" rows="20" cols="60">
+Hedelma = function(maku) {
+    this.maku = maku;
+};
+Hedelma.prototype.toString = function() {
+    return this.maku + ' hedelmä!';
+};
+Omena = function() {
+    Hedelma.call(this, "Herkullinen");
+};
+Omena.prototype.__proto__ = Hedelma.prototype;
+var omppu = new Omena();
+var omppu2 = new Omena();
+omppu2.tarra = "tups";
+
+var omppuBox = JsPeek.showObject(omppu, 'omppu')
+            .css('top', 100).css('left', 100);
+var omppuBox2 = JsPeek.showObject(omppu2, 'toinen omppu')
+            .css('top', 400).css('left', 100);
+JsPeek.showObject(omppu.__proto__, 'ompun __proto__')
+            .css('top', 200).css('left', 400);
+JsPeek.resolveField(omppuBox, '__proto___field');
+JsPeek.resolveField(omppuBox2, '__proto___field')
+            .endhandle.css('top', 220)
+            .parentArrow.redraw();
+                </textarea>
+                <input type="button" id="evalbutton" onclick="eval($('#codeToRun').val())" value="eval">
+            </div>
+        </div>
     </body>
 </html>

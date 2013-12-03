@@ -251,9 +251,9 @@ JsPeek.remove = function(container) {
         }
     }
     for (var i = 0; i < toBePopped.length; i++) {
-        arrows.splice(arrows.indexOf(toBePopped[i]),1);
+        arrows.splice(arrows.indexOf(toBePopped[i]), 1);
     }
-    JsPeek.visibles.splice(JsPeek.visibles.indexOf(container),1);
+    JsPeek.visibles.splice(JsPeek.visibles.indexOf(container), 1);
     container.remove();
 };
 
@@ -264,8 +264,8 @@ JsPeek.Container = function(obj, label) {
     container.header = $('<input class="label" value="' + (label || '') + '">').appendTo(container.topbar);
     container.closebutton = $('<div class="closebutton">x</div>').appendTo(container.topbar)
             .click(function() {
-        JsPeek.remove(container);
-    });
+                JsPeek.remove(container);
+            });
     container.tostringfield = $('<div class="tostring">' + obj + '</div>').appendTo(container);
 
     //Add propertyname fields to the container
@@ -296,36 +296,26 @@ JsPeek.Container = function(obj, label) {
     return container;
 };
 
-
-
-main = function() {
-    Hedelma = function(maku) {
-        this.maku = maku;
-    };
-    Hedelma.prototype.toString = function() {
-        return this.maku + ' hedelmä!';
-    };
-    Omena = function() {
-        Hedelma.call(this, "Herkullinen");
-    };
-    Omena.prototype.__proto__ = Hedelma.prototype;
-    var omppu = new Omena();
-    var omppu2 = new Omena();
-    omppu2.tarra = "tups";
-    var omppuBox = JsPeek.showObject(omppu, 'omppu').css('top', 100).css('left', 100);
-    var omppuBox2 = JsPeek.showObject(omppu2, 'toinen omppu').css('top', 400).css('left', 100);
-    JsPeek.showObject(omppu.__proto__, 'ompun __proto__').css('top', 200).css('left', 400);
-    JsPeek.resolveField(omppuBox, '__proto___field');
-    JsPeek.resolveField(omppuBox2, '__proto___field').endhandle.css('top', 220).parentArrow.redraw();
-
-};
-
-$('body').ready(main);
-
 $('html').mouseup(function(e) {
     dragSystem.dragged = undefined;
 });
 
 $(document).mousemove(function(e) {
     dragSystem.handleDrag(e);
+});
+
+hideshow = function() {
+    var e = $('#controlPanelMain');
+    var b = $('#hideshow');
+    if (e.is(':visible')) {
+        e.hide();
+        b.val('⇲');
+    } else {
+        e.show();
+        b.val('⇱');
+    }
+};
+
+$('#controlPanel').ready(function() {
+    dragSystem.makeDraggable($('#controlPanel'));
 });
