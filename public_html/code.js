@@ -89,6 +89,8 @@ dragSystem.bindToElement = function(draggable, parentElement) {
 };
 
 Arrow = function(a, b) {
+    this.startElement = a;
+    this.endElement = b;
     var start = this.starthandle = Arrow.makeHandle(this);
     var mid = this.midhandle = Arrow.makeHandle(this);
     var end = this.endhandle = Arrow.makeHandle(this);
@@ -155,6 +157,14 @@ Arrow.makeHandle = function(parentArrow) {
     return handle;
 };
 
+Arrow.prototype.remove = function() {
+    this.starthandle.remove();
+    this.midhandle.remove();
+    this.endhandle.remove();
+    this.closer.remove();
+    this.further.remove();
+};
+
 //restyles the arrow
 Arrow.redraw = function(start, end, box, flip) {
     var start = start.offset();
@@ -203,8 +213,9 @@ Arrow.redraw = function(start, end, box, flip) {
 JsPeek = {};
 JsPeek.visibles = [];
 JsPeek.arrows = [];
-JsPeek.showObject = function(object) {
-    return JsPeek.Container(object);
+
+JsPeek.showObject = function(object, label) {
+    return JsPeek.Container(object, label);
 };
 
 JsPeek.resolveField = function(container, fieldname) {
@@ -223,14 +234,41 @@ JsPeek.resolveField = function(container, fieldname) {
         end = JsPeek.showObject(field.referredObject);
     }
     field.drawn = true;
-    return Arrow.fieldToContainer(field, end);
+    var newArrow = Arrow.fieldToContainer(field, end);
+    JsPeek.arrows.push(newArrow);
+    return newArrow;
 };
 
-JsPeek.Container = function(obj) {
+JsPeek.remove = function(container) {
+    var arrows = JsPeek.arrows;
+    var toBePopped = [];
+    for (var i = 0; i < arrows.length; i++) {
+        var arrow = arrows[i];
+        if (arrow.startElement.parentField.parentContainer === container || arrow.endElement === container) {
+            toBePopped.push(arrow);
+            arrow.startElement.parentField.drawn = false;
+            arrow.remove();
+        }
+    }
+    for (var i = 0; i < toBePopped.length; i++) {
+        arrows.splice(arrows.indexOf(toBePopped[i]),1);
+    }
+    JsPeek.visibles.splice(JsPeek.visibles.indexOf(container),1);
+    container.remove();
+};
+
+JsPeek.Container = function(obj, label) {
     var container = $('<div class="box"></div>').appendTo('body');
     container.containedObject = obj;
-    container.header = $('<div class="header">' + obj + '</div>').appendTo(container);
+    container.topbar = $('<div class="topbar"></div>').appendTo(container);
+    container.header = $('<input class="label" value="' + (label || '') + '">').appendTo(container.topbar);
+    container.closebutton = $('<div class="closebutton">x</div>').appendTo(container.topbar)
+            .click(function() {
+        JsPeek.remove(container);
+    });
+    container.tostringfield = $('<div class="tostring">' + obj + '</div>').appendTo(container);
 
+    //Add propertyname fields to the container
     var arr = Object.getOwnPropertyNames(obj);
     if (obj.__proto__ !== null)
         arr.push('__proto__');
@@ -243,6 +281,7 @@ JsPeek.Container = function(obj) {
 
         if (typeof field.referredObject === 'function' || typeof field.referredObject === 'object' && field.referredObject !== null) {
             field.fieldAnchor = $(('<div class="fieldAnchor"></div>')).appendTo(field);
+            field.fieldAnchor.parentField = field;
             (function(a) {
                 field.fieldAnchor.click(function() {
                     JsPeek.resolveField(container, a + "_field");
@@ -273,12 +312,12 @@ main = function() {
     var omppu = new Omena();
     var omppu2 = new Omena();
     omppu2.tarra = "tups";
-    var omppuBox = JsPeek.showObject(omppu).css('top', 100).css('left', 100);
-    var omppuBox2 = JsPeek.showObject(omppu2).css('top', 400).css('left', 100);
-    JsPeek.showObject(omppu.__proto__).css('top', 200).css('left', 400);
+    var omppuBox = JsPeek.showObject(omppu, 'omppu').css('top', 100).css('left', 100);
+    var omppuBox2 = JsPeek.showObject(omppu2, 'toinen omppu').css('top', 400).css('left', 100);
+    JsPeek.showObject(omppu.__proto__, 'ompun __proto__').css('top', 200).css('left', 400);
     JsPeek.resolveField(omppuBox, '__proto___field');
-    JsPeek.resolveField(omppuBox2, '__proto___field').endhandle.css('top',220).parentArrow.redraw();
-    
+    JsPeek.resolveField(omppuBox2, '__proto___field').endhandle.css('top', 220).parentArrow.redraw();
+
 };
 
 $('body').ready(main);

@@ -51,7 +51,7 @@ body {
 .fieldAnchor:hover {
     background-color: greenyellow;
 }
-.header {
+.tostring {
     padding: 10px;
     max-width: 200px;
     border-bottom: 3px solid black;
@@ -63,4 +63,28 @@ body {
     border-color: greenyellow;
     border-width: 4px;
     border-style: dotted;
+}
+
+.topbar {
+    border-bottom: 1px solid black;
+    
+}
+.label {
+    display: inline-block;
+    border: 1px dotted gray;
+}
+.closebutton {
+    color: #333333;
+    background-color: coral;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    float: right;
+    text-align: center;
+    line-height: 18px;
+    font-weight: bold;
+    border: 3px solid #f0f0f0;
+}
+.closebutton:hover {
+    background-color: red;
 }
