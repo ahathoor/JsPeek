@@ -88,14 +88,7 @@ dragSystem.bindToElement = function(draggable, parentElement) {
     draggable.css('left', parentElement.offset().left);
 };
 
-Arrow = function() {
-    this.starthandle = Arrow.makeHandle(this);
-    this.endhandle = Arrow.makeHandle(this);
-    this.closer = $('<div class="arrow"></div>').appendTo('body');
-    this.redraw();
-};
-
-DArrow = function(a, b) {
+Arrow = function(a, b) {
     var start = this.starthandle = Arrow.makeHandle(this);
     var mid = this.midhandle = Arrow.makeHandle(this);
     var end = this.endhandle = Arrow.makeHandle(this);
@@ -137,13 +130,13 @@ DArrow = function(a, b) {
     });
 };
 
-DArrow.prototype.redraw = function() {
+Arrow.prototype.redraw = function() {
     Arrow.redraw(this.starthandle, this.midhandle, this.closer, true);
     Arrow.redraw(this.midhandle, this.endhandle, this.further);
 };
 
-DArrow.fieldToContainer = function(field, endElement) {
-    var arrow = new DArrow(field.fieldAnchor, endElement);
+Arrow.fieldToContainer = function(field, endElement) {
+    var arrow = new Arrow(field.fieldAnchor, endElement);
     field.parentContainer.dragDescriptor.dragBabies.push(arrow.starthandle);
     arrow.starthandle.css('top', arrow.starthandle.position().top + 7);
     arrow.starthandle.css('left', arrow.starthandle.position().left + 7);
@@ -162,18 +155,6 @@ Arrow.makeHandle = function(parentArrow) {
     return handle;
 };
 
-Arrow.fieldToContainer = function(field, endElement) {
-    var arrow = new Arrow();
-    dragSystem.bindToElement(arrow.starthandle, field.fieldAnchor);
-    dragSystem.bindToElement(arrow.endhandle, endElement);
-    field.parentContainer.dragDescriptor.dragBabies.push(arrow.starthandle);
-    endElement.dragDescriptor.dragBabies.push(arrow.endhandle);
-    return arrow;
-};
-
-Arrow.prototype.redraw = function() {
-    Arrow.redraw(this.starthandle, this.endhandle, this.closer, true);
-};
 //restyles the arrow
 Arrow.redraw = function(start, end, box, flip) {
     var start = start.offset();
@@ -242,7 +223,7 @@ JsPeek.resolveField = function(container, fieldname) {
         end = JsPeek.showObject(field.referredObject);
     }
     field.drawn = true;
-    return DArrow.fieldToContainer(field, end);
+    return Arrow.fieldToContainer(field, end);
 };
 
 JsPeek.Container = function(obj) {
