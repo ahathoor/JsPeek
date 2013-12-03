@@ -94,8 +94,8 @@ Arrow = function(a, b) {
     var start = this.starthandle = Arrow.makeHandle(this);
     var mid = this.midhandle = Arrow.makeHandle(this);
     var end = this.endhandle = Arrow.makeHandle(this);
-    this.closer = $('<div class="arrow"></div>').appendTo('body');
-    this.further = $('<div class="arrow"></div>').appendTo('body');
+    this.closer = $('<div class="arrow closer"></div>').appendTo('body');
+    this.further = $('<div class="arrow further"></div>').appendTo('body');
 
     dragSystem.bindToElement(start, a);
     dragSystem.bindToElement(end, b);

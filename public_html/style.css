@@ -64,6 +64,9 @@ body {
     border-width: 4px;
     border-style: dotted;
 }
+.closer {
+    border-color: coral;
+}
 
 .topbar {
     border-bottom: 1px solid black;
