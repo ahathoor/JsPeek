@@ -11,12 +11,15 @@ dragSystem.makeDraggable = function(draggable, bounds) {
     draggable.dragDescriptor.dragBabies = [];
         draggable.dragDescriptor.offX = 0;
         draggable.dragDescriptor.offY = 0;
-
-    draggable.mousedown(function(e) {
+        
+        
+    draggable.dragDescriptor.dragHandler = function(e) {
         dragSystem.dragged = draggable;
         draggable.dragDescriptor.offX = e.offsetX;
         draggable.dragDescriptor.offY = e.pageY - parseInt(draggable.css('top'));
-    });
+    };
+
+    draggable.mousedown(draggable.dragDescriptor.dragHandler);
 };
 
 //Aloitetaan nollasta ja etsitään isoin luku joka kelpaa tarkistusfunktiolle
@@ -298,6 +301,8 @@ JsPeek.Container = function(obj, label) {
     return container;
 };
 
+showObject = JsPeek.showObject;
+
 $('html').mouseup(function(e) {
     dragSystem.dragged = undefined;
 });
@@ -319,5 +324,8 @@ hideshow = function() {
 };
 
 $('#controlPanel').ready(function() {
-    dragSystem.makeDraggable($('#controlPanel'));
+    var cp = $('#controlPanel');   //Täytyy kikkailla ja antaa koko controlPanelin 
+    dragSystem.makeDraggable(cp);  //raahausfunktio vain yläpalkille
+    $('#controlPanelTop').mousedown(cp.dragDescriptor.dragHandler);
+    cp.unbind('mousedown');
 });
